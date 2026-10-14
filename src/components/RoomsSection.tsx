@@ -173,11 +173,11 @@ export const RoomsSection: React.FC<RoomsSectionProps> = ({
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-2 pt-2 border-t border-[#E9E2D5]">
+                <div className="pt-2 border-t border-[#E9E2D5]">
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => onSelectRoom(room)}
-                      className="w-full py-2.5 px-3 rounded-xl text-xs font-semibold text-[#1F241C] bg-[#F2F4ED] hover:bg-[#E9E2D5] border border-[#E9E2D5] transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                      className="w-full py-2.5 px-3 rounded-xl text-xs font-semibold text-[#1F241C] bg-[#F2F4ED] hover:bg-[#E9E2D5] border border-[#E9E2D5] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <Info className="w-3.5 h-3.5 text-[#5D6D4E]" />
                       <span>Full Specs</span>
@@ -185,20 +185,12 @@ export const RoomsSection: React.FC<RoomsSectionProps> = ({
 
                     <button
                       onClick={() => onOpenBooking(room.type, true)}
-                      className="w-full py-2.5 px-3 rounded-xl text-xs font-semibold text-[#5D6D4E] bg-[#E9EEDD] hover:bg-[#DDE4C8] border border-[#DDE4C8] transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                      className="w-full py-2.5 px-3 rounded-xl text-xs font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-sm hover:shadow transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <Calendar className="w-3.5 h-3.5" />
-                      <span>Visit Room</span>
+                      <span>Schedule Visit</span>
                     </button>
                   </div>
-
-                  <button
-                    onClick={() => onOpenBooking(room.type, false)}
-                    className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <span>Reserve {room.title}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
                 </div>
 
               </div>

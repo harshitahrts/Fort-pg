@@ -13,6 +13,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { PG_INFO } from '../data/mockData';
+import { TFCrestIcon } from './TFCrestIcon';
 
 interface FooterProps {
   onOpenBooking: (roomType?: string, isVisit?: boolean) => void;
@@ -35,9 +36,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Col 1: Brand & Identity (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#5D6D4E] text-[#FDFBF7] flex items-center justify-center font-serif text-xl font-bold">
-                TF
-              </div>
+              <TFCrestIcon className="w-12 h-12" variant="light" />
               <div>
                 <span className="font-serif text-2xl font-bold tracking-tight block">
                   The Fort House

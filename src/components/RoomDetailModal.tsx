@@ -157,21 +157,10 @@ export const RoomDetailModal: React.FC<RoomDetailModalProps> = ({
                 onClose();
                 onOpenBooking(room.type, true);
               }}
-              className="w-full sm:w-auto px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold text-[#1F241C] bg-[#F2F4ED] hover:bg-[#E9E2D5] border border-[#E9E2D5] flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <Calendar className="w-4 h-4 text-[#5D6D4E]" />
-              <span>Schedule Room Visit</span>
-            </button>
-
-            <button
-              onClick={() => {
-                onClose();
-                onOpenBooking(room.type, false);
-              }}
               className="w-full sm:flex-1 py-3 px-5 rounded-xl text-xs sm:text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-md flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Reserve {room.title}</span>
-              <ArrowRight className="w-4 h-4" />
+              <Calendar className="w-4 h-4" />
+              <span>Schedule In-Person Room Visit</span>
             </button>
           </div>
 

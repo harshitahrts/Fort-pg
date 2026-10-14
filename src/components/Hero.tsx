@@ -74,7 +74,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, onOpenVirtualTour }) 
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-base font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-md hover:shadow-lg transition-all duration-150 cursor-pointer text-center group"
               >
                 <Calendar className="w-5 h-5 text-[#E9EEDD]" />
-                <span>Book an In-Person Visit</span>
+                <span>Schedule an In-Person Visit</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 

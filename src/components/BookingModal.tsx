@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { 
   X, 
-  CheckCircle2, 
   Calendar, 
-  Phone, 
-  MessageCircle, 
-  Sparkles, 
-  ShieldCheck, 
-  Download, 
-  Copy, 
   Clock, 
-  Building2, 
-  ArrowRight,
-  User,
-  Mail,
-  GraduationCap
+  User, 
+  Phone, 
+  Mail, 
+  Building, 
+  CheckCircle2, 
+  Copy, 
+  MessageCircle, 
+  ShieldCheck
 } from 'lucide-react';
 import { PG_INFO } from '../data/mockData';
 import { BookingInquiry, RoomType } from '../types';
+import { TFCrestIcon } from './TFCrestIcon';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -30,10 +27,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   isOpen,
   onClose,
   initialRoomType,
-  isVisitOnly = false,
 }) => {
-  const [activeTab, setActiveTab] = useState<'inquiry' | 'visit'>(isVisitOnly ? 'visit' : 'inquiry');
-  
   const [formData, setFormData] = useState<BookingInquiry>({
     fullName: '',
     age: '',
@@ -48,7 +42,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     additionalNotes: '',
     visitDate: '',
     visitTimeSlot: '11:00 AM – 1:00 PM',
-    isVisitOnly: isVisitOnly
+    isVisitOnly: true,
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -59,7 +53,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedRef = `TF-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedRef = `TF-VISIT-${Math.floor(100000 + Math.random() * 900000)}`;
     setBookingRef(generatedRef);
     setIsSubmitted(true);
   };
@@ -72,8 +66,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const whatsappMessage = encodeURIComponent(
     `Hi The Fort House Admissions Team! My name is ${formData.fullName || 'a prospective student'}. ` +
-    `I am interested in ${formData.preferredRoomType} room ${activeTab === 'visit' ? `for an in-person visit on ${formData.visitDate || 'this weekend'}` : `with move-in date around ${formData.moveInDate || 'next term'}`}. ` +
-    `My College/Company is ${formData.collegeOrCompany || "St. Xavier's / HR / Working"}. Ref: ${bookingRef || 'TF-ENQUIRY'}`
+    `I would like to schedule an in-person property visit to view the ${formData.preferredRoomType} room on ${formData.visitDate || 'this week'} (${formData.visitTimeSlot}). ` +
+    `College/Company: ${formData.collegeOrCompany || "St. Xavier's / HR / Working"}. Pass Ref: ${bookingRef || 'TF-VISIT'}`
   );
 
   return (
@@ -82,52 +76,36 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         className="relative w-full max-w-2xl bg-[#FDFBF7] rounded-3xl overflow-hidden shadow-2xl border border-[#E8DFD8] my-8 animate-in fade-in zoom-in duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header Bar */}
+        {/* Header Bar with TF Crest Icon */}
         <div className="bg-[#5D6D4E] text-[#FDFBF7] p-5 sm:p-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#4B5A3D] flex items-center justify-center text-[#D4A373]">
-              <Sparkles className="w-5 h-5" />
-            </div>
+          <div className="flex items-center gap-3.5">
+            <TFCrestIcon className="w-11 h-11" variant="light" />
             <div>
-              <h3 className="font-serif text-xl font-bold">
-                {activeTab === 'visit' ? 'Schedule an In-Person Property Visit' : 'Reserve a Bed / Admission Inquiry'}
+              <h3 className="font-serif text-xl sm:text-2xl font-bold">
+                Schedule an In-Person Property Visit
               </h3>
               <p className="text-xs text-[#E9EEDD]">
-                The Fort House • Fort Heritage District, South Mumbai
+                The Fort House • Heritage District, Fort, South Mumbai
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
             className="w-9 h-9 rounded-full bg-[#4B5A3D] hover:bg-[#3D4932] text-white flex items-center justify-center transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Tab Selector (Visit vs Inquiry) */}
+        {/* Informative Subheader */}
         {!isSubmitted && (
-          <div className="p-4 bg-[#F2F4ED] border-b border-[#E9E2D5] flex items-center justify-center gap-2">
-            <button
-              onClick={() => setActiveTab('inquiry')}
-              className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-                activeTab === 'inquiry'
-                  ? 'bg-[#5D6D4E] text-[#FDFBF7] shadow-xs'
-                  : 'text-[#5F6955] hover:bg-[#E9E2D5]'
-              }`}
-            >
-              Bed Reservation / Fee Inquiry
-            </button>
-            <button
-              onClick={() => setActiveTab('visit')}
-              className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-                activeTab === 'visit'
-                  ? 'bg-[#5D6D4E] text-[#FDFBF7] shadow-xs'
-                  : 'text-[#5F6955] hover:bg-[#E9E2D5]'
-              }`}
-            >
-              Schedule In-Person Walkthrough
-            </button>
+          <div className="p-3.5 px-6 bg-[#F2F4ED] border-b border-[#E9E2D5] flex items-center justify-between text-xs text-[#5F6955]">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#5D6D4E]" />
+              <span>Tour all room options, sample food in the dining hall & meet our female warden.</span>
+            </div>
+            <span className="hidden sm:inline font-semibold text-[#5D6D4E]">Visiting Hours: 10 AM – 7 PM</span>
           </div>
         )}
 
@@ -140,16 +118,19 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="sm:col-span-2">
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                    Student / Professional Full Name *
+                    Student / Resident Full Name *
                   </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="e.g. Priya Sharma"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
-                  />
+                  <div className="relative">
+                    <User className="w-4 h-4 text-[#7A856F] absolute left-3 top-3" />
+                    <input
+                      type="text"
+                      required
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      placeholder="e.g. Ananya Deshmukh"
+                      className="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
@@ -162,7 +143,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     max="35"
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    placeholder="e.g. 20"
+                    placeholder="e.g. 19"
                     className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                   />
                 </div>
@@ -174,27 +155,33 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
                     WhatsApp Phone Number *
                   </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+91 98765 43210"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
-                  />
+                  <div className="relative">
+                    <Phone className="w-4 h-4 text-[#7A856F] absolute left-3 top-3" />
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder="+91 98765 43210"
+                      className="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
                     Email Address *
                   </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="priya@gmail.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
-                  />
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-[#7A856F] absolute left-3 top-3" />
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="ananya@gmail.com"
+                      className="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -204,139 +191,110 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
                     College or Workplace Name *
                   </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.collegeOrCompany}
-                    onChange={(e) => setFormData({ ...formData, collegeOrCompany: e.target.value })}
-                    placeholder="e.g. St. Xavier's / HR College / EY"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
-                  />
+                  <div className="relative">
+                    <Building className="w-4 h-4 text-[#7A856F] absolute left-3 top-3" />
+                    <input
+                      type="text"
+                      required
+                      value={formData.collegeOrCompany}
+                      onChange={(e) => setFormData({ ...formData, collegeOrCompany: e.target.value })}
+                      placeholder="e.g. St. Xavier's / HR College / PwC"
+                      className="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                    Preferred Room Type *
+                    Room Type to Tour *
                   </label>
                   <select
                     value={formData.preferredRoomType}
                     onChange={(e) => setFormData({ ...formData, preferredRoomType: e.target.value as RoomType })}
                     className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                   >
-                    <option value="single">Single Occupancy (₹38,500/mo)</option>
+                    <option value="single">Single Luxury Occupancy (₹38,500/mo)</option>
                     <option value="double">Double Sharing (₹25,500/mo) [Most Popular]</option>
                     <option value="triple">Triple Sharing (₹18,500/mo) [Best Value]</option>
                   </select>
                 </div>
               </div>
 
-              {/* Conditional Fields for Visit vs Inquiry */}
-              {activeTab === 'visit' ? (
-                <div className="p-4 rounded-2xl bg-[#E9EEDD] border border-[#DDE4C8] space-y-3">
-                  <div className="text-xs font-bold text-[#5D6D4E] flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
-                    <span>Choose Your Preferred In-Person Visit Slot</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[11px] font-medium text-[#1F241C] mb-1">
-                        Visit Date *
-                      </label>
-                      <input
-                        type="date"
-                        required
-                        value={formData.visitDate}
-                        onChange={(e) => setFormData({ ...formData, visitDate: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl text-xs bg-white border border-[#DDE4C8] text-[#1F241C]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-medium text-[#1F241C] mb-1">
-                        Preferred Time Window *
-                      </label>
-                      <select
-                        value={formData.visitTimeSlot}
-                        onChange={(e) => setFormData({ ...formData, visitTimeSlot: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl text-xs bg-white border border-[#DDE4C8] text-[#1F241C]"
-                      >
-                        <option>10:00 AM – 12:00 PM (Morning Slot)</option>
-                        <option>12:00 PM – 2:00 PM (Lunch Tasting Slot)</option>
-                        <option>3:00 PM – 5:00 PM (Afternoon Slot)</option>
-                        <option>5:00 PM – 7:00 PM (Sunset Rooftop Slot)</option>
-                      </select>
-                    </div>
-                  </div>
+              {/* Visit Slot Scheduler Box */}
+              <div className="p-4 rounded-2xl bg-[#E9EEDD] border border-[#DDE4C8] space-y-3">
+                <div className="text-xs font-bold text-[#5D6D4E] flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4" />
+                  <span>Select Visit Date & Time Window</span>
                 </div>
-              ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                      Expected Move-In Date *
+                    <label className="block text-[11px] font-medium text-[#1F241C] mb-1">
+                      Preferred Date *
                     </label>
                     <input
                       type="date"
                       required
-                      value={formData.moveInDate}
-                      onChange={(e) => setFormData({ ...formData, moveInDate: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C]"
+                      value={formData.visitDate}
+                      onChange={(e) => setFormData({ ...formData, visitDate: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl text-xs bg-white border border-[#DDE4C8] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                      Expected Duration of Stay
+                    <label className="block text-[11px] font-medium text-[#1F241C] mb-1">
+                      Preferred Time Slot *
                     </label>
                     <select
-                      value={formData.durationMonths}
-                      onChange={(e) => setFormData({ ...formData, durationMonths: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C]"
+                      value={formData.visitTimeSlot}
+                      onChange={(e) => setFormData({ ...formData, visitTimeSlot: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl text-xs bg-white border border-[#DDE4C8] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                     >
-                      <option>11 Months (Full Academic Year)</option>
-                      <option>6 Months (Semester / Internship)</option>
-                      <option>3 Months (Summer / Corporate Project)</option>
-                      <option>Other / Long Term</option>
+                      <option>10:00 AM – 12:00 PM (Morning Slot)</option>
+                      <option>12:00 PM – 2:00 PM (Lunch Tasting Slot)</option>
+                      <option>3:00 PM – 5:00 PM (Afternoon Slot)</option>
+                      <option>5:00 PM – 7:00 PM (Sunset Rooftop Slot)</option>
                     </select>
                   </div>
                 </div>
-              )}
+              </div>
 
-              {/* Parent Details (Reassurance) */}
+              {/* Parent / Guardian Accompanying Details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                    Parent / Guardian Full Name
+                    Accompanying Parent / Guardian Name
                   </label>
                   <input
                     type="text"
                     value={formData.parentName}
                     onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-                    placeholder="e.g. Rajesh Sharma"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C]"
+                    placeholder="e.g. Sunil Deshmukh (Father)"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                    Parent Contact Number
+                    Parent Contact Mobile
                   </label>
                   <input
                     type="tel"
                     value={formData.parentPhone}
                     onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
-                    placeholder="Parent's Mobile"
-                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C]"
+                    placeholder="+91 98200 12345"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                   />
                 </div>
               </div>
 
-              {/* Additional Notes */}
+              {/* Additional Questions or Notes */}
               <div>
                 <label className="block text-xs font-semibold text-[#1F241C] mb-1">
-                  Additional Requests / Dietary Preferences (e.g. Jain food, quiet floor)
+                  Questions or Notes for Warden (e.g. food tasting, quiet study corner)
                 </label>
                 <textarea
                   rows={2}
                   value={formData.additionalNotes}
                   onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
-                  placeholder="Tell us any specific requirements..."
-                  className="w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C]"
+                  placeholder="Any questions or special timing preferences..."
+                  className="w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm bg-[#F2F4ED] border border-[#E9E2D5] text-[#1F241C] focus:outline-none focus:border-[#5D6D4E]"
                 />
               </div>
 
@@ -347,7 +305,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   className="w-full py-3.5 px-4 rounded-xl text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <CheckCircle2 className="w-4 h-4 text-[#D4A373]" />
-                  <span>{activeTab === 'visit' ? 'Confirm In-Person Visit Pass' : 'Submit Admission & Bed Inquiry'}</span>
+                  <span>Confirm In-Person Property Visit Pass</span>
                 </button>
 
                 <div className="grid grid-cols-2 gap-2 pt-1">
@@ -381,13 +339,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               <div className="space-y-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#5D6D4E] bg-[#E9EEDD] px-3 py-1 rounded-full">
-                  Inquiry & Visit Pass Confirmed
+                  Property Visit Pass Generated
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1F241C]">
-                  Thank You, {formData.fullName || 'Prospective Resident'}!
+                  Visit Scheduled, {formData.fullName || 'Prospective Resident'}!
                 </h3>
                 <p className="text-xs sm:text-sm text-[#5F6955] max-w-md mx-auto">
-                  Your admission inquiry has been registered with The Fort House Warden and Admissions Office.
+                  Your in-person walkthrough pass has been registered with The Fort House Warden and Security Desk.
                 </p>
               </div>
 
@@ -395,7 +353,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               <div className="p-4 rounded-2xl bg-[#F2F4ED] border border-[#E9E2D5] max-w-md mx-auto text-left space-y-3">
                 <div className="flex items-center justify-between border-b border-[#E9E2D5] pb-2.5">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#7A856F]">Booking Reference ID</span>
+                    <span className="text-[10px] uppercase font-bold text-[#7A856F]">Gate Pass Reference ID</span>
                     <div className="font-mono font-bold text-lg text-[#5D6D4E]">{bookingRef}</div>
                   </div>
                   <button
@@ -417,12 +375,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                     <span className="font-semibold truncate block">{formData.collegeOrCompany || "St. Xavier's / HR"}</span>
                   </div>
                   <div>
-                    <span className="text-[#7A856F] block text-[11px]">Mobile Number</span>
+                    <span className="text-[#7A856F] block text-[11px]">Contact Mobile</span>
                     <span className="font-semibold">{formData.phone || PG_INFO.phone}</span>
                   </div>
                   <div>
-                    <span className="text-[#7A856F] block text-[11px]">Visit / Move-in</span>
-                    <span className="font-semibold">{formData.visitDate || formData.moveInDate || 'Upcoming'}</span>
+                    <span className="text-[#7A856F] block text-[11px]">Scheduled Visit</span>
+                    <span className="font-semibold">{formData.visitDate || 'Upcoming'} ({formData.visitTimeSlot})</span>
                   </div>
                 </div>
               </div>
@@ -436,14 +394,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   className="w-full sm:w-auto px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-sm flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>Send Confirmation to WhatsApp</span>
+                  <span>Send Pass Details to WhatsApp</span>
                 </a>
 
                 <button
                   onClick={onClose}
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold text-[#1F241C] bg-[#F2F4ED] hover:bg-[#E9E2D5] border border-[#E9E2D5]"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold text-[#1F241C] bg-[#F2F4ED] hover:bg-[#E9E2D5] border border-[#E9E2D5] cursor-pointer"
                 >
-                  Back to Website
+                  Close & Return
                 </button>
               </div>
             </div>

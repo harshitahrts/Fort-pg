@@ -68,10 +68,10 @@ export const WhatsAppFloatingButton: React.FC<WhatsAppFloatingButtonProps> = ({ 
             </button>
 
             <a
-              href={`tel:${PG_INFO.phone}`}
+              href={`tel:${PG_INFO.phone.replace(/\s+/g, '')}`}
               className="w-full p-2.5 rounded-xl bg-[#FDFBF7] hover:bg-[#E9EEDD] border border-[#E9E2D5] text-[#1F241C] font-medium flex items-center justify-between group transition-colors"
             >
-              <span>📞 Direct Call (+91 98200 45678)</span>
+              <span>📞 Direct Call ({PG_INFO.phone})</span>
               <Phone className="w-3.5 h-3.5 text-[#B87A44]" />
             </a>
           </div>

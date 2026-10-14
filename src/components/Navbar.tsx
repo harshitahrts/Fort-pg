@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, Calendar, Menu, X, Shield, BedDouble, MapPin, Sparkles } from 'lucide-react';
 import { PG_INFO } from '../data/mockData';
+import { TFCrestIcon } from './TFCrestIcon';
 
 interface NavbarProps {
   onOpenBooking: (roomType?: string, isVisit?: boolean) => void;
@@ -47,12 +48,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenu, activ
         <span className="inline-flex items-center justify-center bg-[#D4A373] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-2xs">
           Admissions Open
         </span>
-        <span>Academic Year 2025–2026 Batch • Only 4 Beds Remaining in Fort</span>
+        <span>Academic Year 2026–27 Batch • Only 4 Spots Remaining in Fort</span>
         <button 
-          onClick={() => onOpenBooking(undefined, false)}
+          onClick={() => onOpenBooking(undefined, true)}
           className="underline hover:text-[#E9EEDD] ml-1.5 font-semibold cursor-pointer hidden md:inline-flex items-center gap-1"
         >
-          Check Availability &rarr;
+          Schedule a Visit &rarr;
         </button>
       </div>
 
@@ -67,16 +68,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenu, activ
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
-            {/* Brand Logo & Tag */}
+            {/* Brand Logo & Tag with Crest Icon */}
             <a 
               href="#hero" 
               onClick={(e) => handleNavClick(e, '#hero')}
               className="flex items-center gap-3 group"
               id="brand-logo-link"
             >
-              <div className="w-10 h-10 rounded-full bg-[#5D6D4E] text-[#FDFBF7] flex items-center justify-center font-serif text-xl font-bold shadow-sm group-hover:bg-[#4B5A3D] transition-colors">
-                TF
-              </div>
+              <TFCrestIcon className="w-11 h-11" variant="natural" />
               <div className="flex flex-col">
                 <span className="font-serif text-xl sm:text-2xl font-bold text-[#1F241C] tracking-tight group-hover:text-[#5D6D4E] transition-colors">
                   The Fort House
@@ -113,32 +112,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenu, activ
               {/* Call Warden Quick Dial */}
               <a
                 id="header-call-btn"
-                href={`tel:${PG_INFO.phone}`}
+                href={`tel:${PG_INFO.phone.replace(/\s+/g, '')}`}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl text-[#353D2F] bg-[#F2F4ED] hover:bg-[#E9E2D5] transition-colors border border-[#E9E2D5]"
-                title="Call Admissions Office"
+                title={`Call Admissions Office: ${PG_INFO.phone}`}
               >
                 <Phone className="w-3.5 h-3.5 text-[#5D6D4E]" />
                 <span className="hidden lg:inline">{PG_INFO.phone}</span>
                 <span className="lg:hidden">Call</span>
               </a>
 
-              {/* Schedule Visit Button */}
+              {/* Primary Schedule Visit CTA */}
               <button
                 id="header-schedule-visit-btn"
                 onClick={() => onOpenBooking(undefined, true)}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-xl text-[#5D6D4E] bg-[#E9EEDD] hover:bg-[#DDE4C8] transition-colors border border-[#DDE4C8] cursor-pointer"
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                <span>Schedule Visit</span>
-              </button>
-
-              {/* Primary Book / Inquire Button */}
-              <button
-                id="header-book-now-btn"
-                onClick={() => onOpenBooking()}
                 className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-sm hover:shadow transition-all cursor-pointer"
               >
-                <span>Book a Bed</span>
+                <Calendar className="w-4 h-4" />
+                <span>Schedule Visit</span>
               </button>
             </div>
 
@@ -182,25 +172,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenu, activ
 
             <div className="mt-4 pt-4 border-t border-[#E9E2D5] flex flex-col gap-2.5">
               <button
-                id="mobile-drawer-book-btn"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenBooking();
-                }}
-                className="w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] text-center shadow-sm"
-              >
-                Book a Bed / Inquire Now
-              </button>
-
-              <button
                 id="mobile-drawer-visit-btn"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenBooking(undefined, true);
                 }}
-                className="w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-[#5D6D4E] bg-[#E9EEDD] hover:bg-[#DDE4C8] text-center"
+                className="w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] text-center shadow-sm flex items-center justify-center gap-2"
               >
-                Schedule an In-Person Property Visit
+                <Calendar className="w-4 h-4" />
+                <span>Schedule an In-Person Property Visit</span>
               </button>
 
               <div className="grid grid-cols-2 gap-2 pt-1">

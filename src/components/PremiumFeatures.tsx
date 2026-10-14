@@ -119,7 +119,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({
                 <span className="text-xs text-[#7A856F]">Updated 5 mins ago</span>
               </div>
               <h3 className="font-serif text-2xl font-bold text-[#1F241C]">
-                Monsoon 2025 Admissions Status
+                Academic Year 2026–27 Admissions Status
               </h3>
               <p className="text-xs sm:text-sm text-[#5F6955] mt-1">
                 Due to proximity to St. Xavier’s and HR College, rooms fill quickly before the academic term starts.
@@ -163,10 +163,10 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({
             </div>
 
             <button
-              onClick={() => onOpenBooking()}
+              onClick={() => onOpenBooking(undefined, true)}
               className="w-full py-3 rounded-xl text-xs sm:text-sm font-semibold text-[#FDFBF7] bg-[#5D6D4E] hover:bg-[#4B5A3D] shadow-sm transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Instant Reserve Remaining Bed</span>
+              <span>Schedule In-Person Property Visit</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

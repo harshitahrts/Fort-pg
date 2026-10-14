@@ -5,8 +5,8 @@ export const PG_INFO = {
   tagline: "Safe. Comfortable. Premium Living in Fort, Mumbai.",
   subtext: "A boutique residence designed exclusively for female students, interns, and young professionals in South Mumbai's most prestigious cultural and academic hub.",
   address: "Heritage Lane, Near Flora Fountain & Kala Ghoda, Fort, Mumbai – 400001",
-  phone: "+91 98200 45678",
-  whatsapp: "+919820045678",
+  phone: "+91 88876 76715",
+  whatsapp: "918887676715",
   email: "admissions@theforthouse.in",
   stats: {
     occupancy: "96%",
